@@ -1,0 +1,9 @@
+{
+  "mode": "yolo",
+  "parallelization": true,
+  "created": "2026-01-19",
+  "workflow": {
+    "_auto_chain_active": false
+  },
+  "granularity": "fine"
+}

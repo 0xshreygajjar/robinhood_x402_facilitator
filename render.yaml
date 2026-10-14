@@ -1,0 +1,36 @@
+# Render Blueprint: the OpenFacilitator server in public mode for Robinhood Chain.
+# Secrets marked `sync: false` are asked for in the Render dashboard on first deploy; they are never stored here.
+services:
+  - type: web
+    name: robinhood-x402-facilitator
+    runtime: docker
+    dockerfilePath: ./Dockerfile.server
+    dockerContext: .
+    # "free" sleeps after 15 minutes idle and takes ~1 minute to wake, which makes paid calls time out.
+    # Use at least "starter" for anything beyond a quick test.
+    plan: starter
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: NODE_ENV
+        value: production
+      - key: BETTER_AUTH_SECRET
+        generateValue: true
+      - key: BETTER_AUTH_URL
+        sync: false # your service URL, e.g. https://robinhood-x402-facilitator.onrender.com
+      - key: DASHBOARD_URL
+        sync: false # same URL is fine; no dashboard is deployed in public mode
+      - key: FREE_FACILITATOR_PUBLIC_URL
+        sync: false # https://<your-service>.onrender.com/free
+      - key: FREE_FACILITATOR_EVM_KEY
+        sync: false # settlement wallet private key (64 hex, 0x optional). Pays gas, so keep little ETH in it.
+      - key: FREE_FACILITATOR_EVM_CHAINS
+        value: "46630"
+      - key: FREE_FACILITATOR_TOKEN_DOMAINS
+        sync: false # JSON, only needed for a custom token such as the mock USDG
+      - key: FREE_FACILITATOR_API_KEYS
+        sync: false # comma-separated secrets for your backends; leave empty only while developing
+      - key: FREE_FACILITATOR_ALLOWED_ORIGINS
+        sync: false # comma-separated browser origins, e.g. https://app.example.com

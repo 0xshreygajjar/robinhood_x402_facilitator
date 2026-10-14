@@ -1,0 +1,60 @@
+{
+  "name": "@openfacilitator/server",
+  "version": "0.1.0",
+  "description": "Multi-tenant HTTP server for x402 payment facilitators",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "openfacilitator-server": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run build:deps && tsc",
+    "build:deps": "pnpm --filter @openfacilitator/core build && pnpm --filter @openfacilitator/sdk build",
+    "dev": "NODE_ENV=development tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "lint": "pnpm run build:deps && tsc --noEmit",
+    "seed": "tsx scripts/seed-transactions.ts",
+    "test": "pnpm run build:deps && vitest run --exclude='dist/**'",
+    "test:watch": "vitest --exclude='dist/**'",
+    "test:migration": "npm run build && node scripts/smoke-test-migration.mjs"
+  },
+  "dependencies": {
+    "@noble/curves": "^2.0.1",
+    "@openfacilitator/core": "workspace:*",
+    "@openfacilitator/sdk": "workspace:*",
+    "@solana/spl-token": "^0.4.14",
+    "@solana/web3.js": "^1.98.4",
+    "@stacks/transactions": "^7.3.1",
+    "@x402jobs/sdk": "0.2.2",
+    "better-auth": "^1.6.11",
+    "better-sqlite3": "^12.5.0",
+    "bs58": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.22.2",
+    "fastestsmallesttextencoderdecoder": "^1.0.22",
+    "helmet": "^8.0.0",
+    "nanoid": "^5.0.9",
+    "node-cron": "^4.2.1",
+    "viem": "^2.21.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "@types/node-cron": "^3.0.11",
+    "@types/supertest": "^6.0.3",
+    "supertest": "^7.2.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.7"
+  }
+}

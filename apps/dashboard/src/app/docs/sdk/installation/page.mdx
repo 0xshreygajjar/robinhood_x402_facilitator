@@ -1,0 +1,46 @@
+<PageHeader title="Installation" description="Install and configure the OpenFacilitator SDK." />
+
+## Package Manager
+
+```bash
+# npm
+npm install @openfacilitator/sdk
+
+# yarn
+yarn add @openfacilitator/sdk
+
+# pnpm
+pnpm add @openfacilitator/sdk
+```
+
+## Configuration
+
+```typescript
+import { OpenFacilitator } from '@openfacilitator/sdk';
+
+// Uses https://pay.openfacilitator.io by default
+const facilitator = new OpenFacilitator();
+
+// Advanced: configure a self-hosted or private facilitator
+const customFacilitator = new OpenFacilitator({
+  url: 'https://pay.yourdomain.com',
+  timeout: 30000,
+  headers: {
+    'X-Custom-Header': 'value',
+  },
+});
+```
+
+## TypeScript
+
+The SDK is written in TypeScript and includes full type definitions:
+
+```typescript
+import type {
+  PaymentPayload,
+  PaymentRequirements,
+  VerifyResponse,
+  SettleResponse,
+  SupportedResponse
+} from '@openfacilitator/sdk';
+```
